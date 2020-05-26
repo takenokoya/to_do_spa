@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="sample.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <ul>
+                <!-- v-forディレクティブでは、配列の中身を一つずつ取り出してそのプロパティを表示します。 -->
+                <li v-for='todoList in todoLists'>
+                    <!-- v-modelディレクティブを使うことでMVVMモデルを実現することができる -->
+                    <!-- 今回でいえば、配列の中のcheckToggleの値とinputタグは連動していて、checkToggleがtrueになれば、チェックボックスにもチェックが入る。 -->
+                    <input type='checkbox' v-model='todoList.checkToggle'>
+                    <!-- マスタッシュ構文（dataで設定した値を{{}}で囲う） -->
+                    <label v-bind:class={doneTask:todoList.checkToggle}>
+                        {{ todoList.title }}
+                    </label>
+                </li>
+            </ul>
+            <hr>
+            <input type='text' 
+                class='taskInput'
+                placeholder="新しいタスクを追加する" 
+                v-model='newTitle' 
+                v-on:change='checkEnteredValue()'>
+            <!-- v-onはなんらかの操作が行われたときに関数を実装できる。 -->
+            <button id='addBtn'
+                v-on:click='addToDoList()'
+                v-bind:class={noclick:!newTitleToggle}>
+                タスクを追加
+            </button>
+            <br>
+            <button id='deleteBtn'
+                v-on:click='deleteToDoList()'>
+                タスクを削除
+            </button>
+        </div>
+        <script src='./sample.js'></script>
+    </body>
+</html>
